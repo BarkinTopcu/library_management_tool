@@ -71,16 +71,6 @@
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="membership_menu_button">
-          <property name="styleSheet">
-           <string notr="true">background: white;</string>
-          </property>
-          <property name="text">
-           <string>Membership</string>
-          </property>
-         </widget>
-        </item>
-        <item>
          <spacer name="verticalSpacer">
           <property name="orientation">
            <enum>Qt::Vertical</enum>
@@ -166,7 +156,7 @@
               <string>Book ID:</string>
              </property>
             </widget>
-            <widget class="QLineEdit" name="user_input_book_loans">
+            <widget class="QLineEdit" name="loans_book_ID_edit">
              <property name="geometry">
               <rect>
                <x>80</x>
@@ -176,7 +166,7 @@
               </rect>
              </property>
             </widget>
-            <widget class="QPushButton" name="pushButton">
+            <widget class="QPushButton" name="create_loan_button">
              <property name="geometry">
               <rect>
                <x>80</x>
@@ -218,7 +208,7 @@
               <string>Loan ID:</string>
              </property>
             </widget>
-            <widget class="QLineEdit" name="show_loans_button_users">
+            <widget class="QLineEdit" name="loans_loan_ID_edit">
              <property name="geometry">
               <rect>
                <x>80</x>
@@ -228,7 +218,7 @@
               </rect>
              </property>
             </widget>
-            <widget class="QPushButton" name="pushButton_4">
+            <widget class="QPushButton" name="remove_loan_button">
              <property name="geometry">
               <rect>
                <x>80</x>
@@ -257,7 +247,7 @@
             <property name="title">
              <string>Loans</string>
             </property>
-            <widget class="QPushButton" name="pushButton_5">
+            <widget class="QPushButton" name="show_all_loans_button">
              <property name="geometry">
               <rect>
                <x>50</x>
@@ -367,20 +357,253 @@
              </spacer>
             </item>
             <item row="1" column="1">
-             <widget class="QStackedWidget" name="stackedWidget_2">
+             <widget class="QStackedWidget" name="main_menu_widgets">
               <property name="minimumSize">
                <size>
                 <width>350</width>
-                <height>500</height>
+                <height>400</height>
                </size>
               </property>
               <property name="styleSheet">
                <string notr="true">background:#FFEEE4;</string>
               </property>
               <property name="currentIndex">
-               <number>0</number>
+               <number>1</number>
               </property>
-              <widget class="QWidget" name="page_3">
+              <widget class="QWidget" name="main_menu_info">
+               <widget class="QWidget" name="widget_3" native="true">
+                <property name="geometry">
+                 <rect>
+                  <x>10</x>
+                  <y>10</y>
+                  <width>331</width>
+                  <height>381</height>
+                 </rect>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background:white;</string>
+                </property>
+                <widget class="QLabel" name="label_10">
+                 <property name="geometry">
+                  <rect>
+                   <x>40</x>
+                   <y>60</y>
+                   <width>121</width>
+                   <height>41</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Microsoft Sans Serif</family>
+                   <pointsize>12</pointsize>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>First Name:</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_11">
+                 <property name="geometry">
+                  <rect>
+                   <x>40</x>
+                   <y>100</y>
+                   <width>121</width>
+                   <height>41</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Microsoft Sans Serif</family>
+                   <pointsize>12</pointsize>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Last Name:</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_12">
+                 <property name="geometry">
+                  <rect>
+                   <x>40</x>
+                   <y>140</y>
+                   <width>141</width>
+                   <height>41</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Microsoft Sans Serif</family>
+                   <pointsize>12</pointsize>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Membership:</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_13">
+                 <property name="geometry">
+                  <rect>
+                   <x>40</x>
+                   <y>180</y>
+                   <width>201</width>
+                   <height>41</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Microsoft Sans Serif</family>
+                   <pointsize>12</pointsize>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Registration Date:</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_14">
+                 <property name="geometry">
+                  <rect>
+                   <x>130</x>
+                   <y>10</y>
+                   <width>71</width>
+                   <height>51</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Microsoft Sans Serif</family>
+                   <pointsize>30</pointsize>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Info</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_15">
+                 <property name="geometry">
+                  <rect>
+                   <x>40</x>
+                   <y>220</y>
+                   <width>201</width>
+                   <height>41</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Microsoft Sans Serif</family>
+                   <pointsize>12</pointsize>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Phone:</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="label_16">
+                 <property name="geometry">
+                  <rect>
+                   <x>40</x>
+                   <y>250</y>
+                   <width>201</width>
+                   <height>41</height>
+                  </rect>
+                 </property>
+                 <property name="font">
+                  <font>
+                   <family>Microsoft Sans Serif</family>
+                   <pointsize>12</pointsize>
+                   <bold>true</bold>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Email:</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="info_first_name_label">
+                 <property name="geometry">
+                  <rect>
+                   <x>150</x>
+                   <y>73</y>
+                   <width>121</width>
+                   <height>16</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Name</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="info_last_name_label">
+                 <property name="geometry">
+                  <rect>
+                   <x>150</x>
+                   <y>113</y>
+                   <width>121</width>
+                   <height>16</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Name</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="info_membership_label">
+                 <property name="geometry">
+                  <rect>
+                   <x>160</x>
+                   <y>153</y>
+                   <width>121</width>
+                   <height>16</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Name</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="info_regis_date_label">
+                 <property name="geometry">
+                  <rect>
+                   <x>200</x>
+                   <y>193</y>
+                   <width>121</width>
+                   <height>16</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Name</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="info_phone_label">
+                 <property name="geometry">
+                  <rect>
+                   <x>110</x>
+                   <y>233</y>
+                   <width>121</width>
+                   <height>16</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Name</string>
+                 </property>
+                </widget>
+                <widget class="QLabel" name="info_email_label">
+                 <property name="geometry">
+                  <rect>
+                   <x>110</x>
+                   <y>263</y>
+                   <width>121</width>
+                   <height>16</height>
+                  </rect>
+                 </property>
+                 <property name="text">
+                  <string>Name</string>
+                 </property>
+                </widget>
+               </widget>
+              </widget>
+              <widget class="QWidget" name="main_menu_log_in">
                <widget class="QLabel" name="label_7">
                 <property name="geometry">
                  <rect>
@@ -401,7 +624,7 @@
                  <string>Log In</string>
                 </property>
                </widget>
-               <widget class="QLineEdit" name="lineEdit">
+               <widget class="QLineEdit" name="login_email_edit">
                 <property name="geometry">
                  <rect>
                   <x>100</x>
@@ -424,10 +647,10 @@ padding-bottom:7px;
 </string>
                 </property>
                 <property name="text">
-                 <string>User Name</string>
+                 <string>Email</string>
                 </property>
                </widget>
-               <widget class="QLineEdit" name="lineEdit_4">
+               <widget class="QLineEdit" name="login_password_edit">
                 <property name="geometry">
                  <rect>
                   <x>100</x>
@@ -451,7 +674,7 @@ padding-bottom:7px;
                  <enum>QLineEdit::Password</enum>
                 </property>
                </widget>
-               <widget class="QPushButton" name="pushButton_6">
+               <widget class="QPushButton" name="login_button">
                 <property name="geometry">
                  <rect>
                   <x>140</x>
@@ -480,8 +703,209 @@ padding-bottom:7px;
                  <string/>
                 </property>
                </widget>
+               <widget class="QPushButton" name="go_signup_button">
+                <property name="geometry">
+                 <rect>
+                  <x>140</x>
+                  <y>320</y>
+                  <width>75</width>
+                  <height>24</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string>Sign Up</string>
+                </property>
+               </widget>
+               <widget class="QCheckBox" name="staff_check_box">
+                <property name="geometry">
+                 <rect>
+                  <x>150</x>
+                  <y>260</y>
+                  <width>51</width>
+                  <height>20</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string>Staff</string>
+                </property>
+               </widget>
               </widget>
-              <widget class="QWidget" name="page_4"/>
+              <widget class="QWidget" name="main_menu_sign_up">
+               <widget class="QLabel" name="label_9">
+                <property name="geometry">
+                 <rect>
+                  <x>100</x>
+                  <y>10</y>
+                  <width>151</width>
+                  <height>51</height>
+                 </rect>
+                </property>
+                <property name="font">
+                 <font>
+                  <family>Microsoft Sans Serif</family>
+                  <pointsize>30</pointsize>
+                  <bold>true</bold>
+                 </font>
+                </property>
+                <property name="text">
+                 <string>Sign Up</string>
+                </property>
+               </widget>
+               <widget class="QLineEdit" name="signup_first_name_edit">
+                <property name="geometry">
+                 <rect>
+                  <x>30</x>
+                  <y>70</y>
+                  <width>121</width>
+                  <height>41</height>
+                 </rect>
+                </property>
+                <property name="font">
+                 <font>
+                  <italic>false</italic>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color:white;
+border:none;
+border-bottom:2px solid black;
+color:rgb(164, 202, 222);
+padding-bottom:7px;
+</string>
+                </property>
+                <property name="text">
+                 <string>First Name</string>
+                </property>
+               </widget>
+               <widget class="QLineEdit" name="signup_password_edit">
+                <property name="geometry">
+                 <rect>
+                  <x>30</x>
+                  <y>190</y>
+                  <width>151</width>
+                  <height>41</height>
+                 </rect>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color:white;
+border:none;
+border-bottom:2px solid black;
+color:rgb(164, 202, 222);
+padding-bottom:7px;
+</string>
+                </property>
+                <property name="text">
+                 <string>Password</string>
+                </property>
+                <property name="echoMode">
+                 <enum>QLineEdit::Password</enum>
+                </property>
+               </widget>
+               <widget class="QPushButton" name="signup_button">
+                <property name="geometry">
+                 <rect>
+                  <x>140</x>
+                  <y>320</y>
+                  <width>75</width>
+                  <height>24</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string>Sign Up</string>
+                </property>
+               </widget>
+               <widget class="QLineEdit" name="signup_email_edit">
+                <property name="geometry">
+                 <rect>
+                  <x>30</x>
+                  <y>130</y>
+                  <width>291</width>
+                  <height>41</height>
+                 </rect>
+                </property>
+                <property name="font">
+                 <font>
+                  <italic>false</italic>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color:white;
+border:none;
+border-bottom:2px solid black;
+color:rgb(164, 202, 222);
+padding-bottom:7px;
+</string>
+                </property>
+                <property name="text">
+                 <string>Email</string>
+                </property>
+               </widget>
+               <widget class="QPushButton" name="main_menu_back_button">
+                <property name="geometry">
+                 <rect>
+                  <x>140</x>
+                  <y>350</y>
+                  <width>75</width>
+                  <height>24</height>
+                 </rect>
+                </property>
+                <property name="text">
+                 <string>Back</string>
+                </property>
+               </widget>
+               <widget class="QLineEdit" name="signup_last_name_edit">
+                <property name="geometry">
+                 <rect>
+                  <x>200</x>
+                  <y>70</y>
+                  <width>121</width>
+                  <height>41</height>
+                 </rect>
+                </property>
+                <property name="font">
+                 <font>
+                  <italic>false</italic>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color:white;
+border:none;
+border-bottom:2px solid black;
+color:rgb(164, 202, 222);
+padding-bottom:7px;
+</string>
+                </property>
+                <property name="text">
+                 <string>Last Name</string>
+                </property>
+               </widget>
+               <widget class="QLineEdit" name="signup_phone_edit">
+                <property name="geometry">
+                 <rect>
+                  <x>30</x>
+                  <y>250</y>
+                  <width>121</width>
+                  <height>41</height>
+                 </rect>
+                </property>
+                <property name="font">
+                 <font>
+                  <italic>false</italic>
+                 </font>
+                </property>
+                <property name="styleSheet">
+                 <string notr="true">background-color:white;
+border:none;
+border-bottom:2px solid black;
+color:rgb(164, 202, 222);
+padding-bottom:7px;
+</string>
+                </property>
+                <property name="text">
+                 <string>Phone Number</string>
+                </property>
+               </widget>
+              </widget>
              </widget>
             </item>
            </layout>
@@ -520,7 +944,7 @@ padding-bottom:7px;
            <property name="styleSheet">
             <string notr="true">background:#58C9B9;</string>
            </property>
-           <widget class="QLineEdit" name="line_edit_title_books">
+           <widget class="QLineEdit" name="books_title_edit">
             <property name="geometry">
              <rect>
               <x>100</x>
@@ -562,7 +986,7 @@ padding-bottom:7px;
              <string>Search</string>
             </property>
            </widget>
-           <widget class="QLineEdit" name="line_edit_author_books">
+           <widget class="QLineEdit" name="books_author_edit">
             <property name="geometry">
              <rect>
               <x>330</x>
