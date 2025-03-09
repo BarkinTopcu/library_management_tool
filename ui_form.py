@@ -47,6 +47,7 @@ class Ui_Widget(object):
 
         self.books_menu_button = QPushButton(self.menu_widget)
         self.books_menu_button.setObjectName(u"books_menu_button")
+        self.books_menu_button.setEnabled(True)
         self.books_menu_button.setStyleSheet(u"background: white;")
 
         self.verticalLayout.addWidget(self.books_menu_button)
@@ -64,9 +65,9 @@ class Ui_Widget(object):
 
         self.horizontalLayout_2.addWidget(self.menu_widget)
 
-        self.stackedWidget = QStackedWidget(Widget)
-        self.stackedWidget.setObjectName(u"stackedWidget")
-        self.stackedWidget.setStyleSheet(u"background:black;")
+        self.main_widget = QStackedWidget(Widget)
+        self.main_widget.setObjectName(u"main_widget")
+        self.main_widget.setStyleSheet(u"background:black;")
         self.loans_widget_users = QWidget()
         self.loans_widget_users.setObjectName(u"loans_widget_users")
         self.verticalLayout_6 = QVBoxLayout(self.loans_widget_users)
@@ -130,7 +131,7 @@ class Ui_Widget(object):
 
         self.verticalLayout_6.addWidget(self.widget)
 
-        self.stackedWidget.addWidget(self.loans_widget_users)
+        self.main_widget.addWidget(self.loans_widget_users)
         self.main_menu_widget = QWidget()
         self.main_menu_widget.setObjectName(u"main_menu_widget")
         self.main_menu_widget.setStyleSheet(u"background:gray;")
@@ -333,7 +334,7 @@ class Ui_Widget(object):
 
         self.verticalLayout_7.addWidget(self.widget_2)
 
-        self.stackedWidget.addWidget(self.main_menu_widget)
+        self.main_widget.addWidget(self.main_menu_widget)
         self.books_widget = QWidget()
         self.books_widget.setObjectName(u"books_widget")
         self.books_widget.setStyleSheet(u"background: black;")
@@ -493,6 +494,7 @@ class Ui_Widget(object):
 
         self.books_table = QTableWidget(self.widget_books_search)
         self.books_table.setObjectName(u"books_table")
+        self.books_table.setEnabled(True)
         self.books_table.setStyleSheet(u"background:#FFEEE4;")
 
         self.horizontalLayout_3.addWidget(self.books_table)
@@ -500,9 +502,9 @@ class Ui_Widget(object):
 
         self.verticalLayout_2.addWidget(self.widget_books_search)
 
-        self.stackedWidget.addWidget(self.books_widget)
+        self.main_widget.addWidget(self.books_widget)
 
-        self.horizontalLayout_2.addWidget(self.stackedWidget)
+        self.horizontalLayout_2.addWidget(self.main_widget)
 
 
         self.horizontalLayout.addLayout(self.horizontalLayout_2)
@@ -510,7 +512,7 @@ class Ui_Widget(object):
 
         self.retranslateUi(Widget)
 
-        self.stackedWidget.setCurrentIndex(1)
+        self.main_widget.setCurrentIndex(1)
         self.main_menu_widgets.setCurrentIndex(1)
 
 
