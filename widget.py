@@ -11,6 +11,8 @@ class Widget(QWidget):
         super().__init__(parent)
         self.ui = Ui_Widget()
         self.ui.setupUi(self)
+
+        #Main Page Variables
         self.user_type = None
         self.user_ID = None
         self.first_name = None
@@ -19,6 +21,8 @@ class Widget(QWidget):
         self.email = None
         self.reg = None
         self.membership = None
+
+        #Mysql and initfunctions
         self.connection = None
         self.mysql_cursor = None
         self.mysql_connect()
@@ -39,6 +43,7 @@ class Widget(QWidget):
         self.ui.loans_menu_button.clicked.connect(self.go_loans_menu)
         self.ui.main_menu_button.clicked.connect(self.go_main_menu)
         self.ui.search_button_books.clicked.connect(self.search_books)
+        self.ui.filter_button_books.clicked.connect(self.filter_books)
 
     #SQL connect
     def mysql_connect(self):
@@ -51,8 +56,12 @@ class Widget(QWidget):
             )
             self.mysql_cursor = self.connection.cursor()
         except mysql.connector.Error as err:
-            print("Veritabanı hatası:", err)
+            print("Database error:", err)
     
+
+    '''
+    Generaly these below functions are for GUI configiration and connection of buttons
+    '''
     def go_books_menu(self):
         self.ui.main_widget.setCurrentWidget(self.ui.books_widget)
 
@@ -65,10 +74,15 @@ class Widget(QWidget):
     #Button function that goes to signup of mainmenu
     def go_signup_button(self):
         self.ui.main_menu_widgets.setCurrentWidget(self.ui.main_menu_sign_up)
+
     #Button function that allow users to go to login page from sign up page
     def go_back_login_button(self):
         self.ui.main_menu_widgets.setCurrentWidget(self.ui.main_menu_log_in)
     
+
+    '''
+    Functionality of GUI functions
+    '''
     #Function that sign up to user to database
     def on_signup_button_click(self):
         first_name = self.ui.signup_first_name_edit.text()
@@ -81,7 +95,7 @@ class Widget(QWidget):
         query = """
         INSERT INTO user (first_name,last_name,email,user_password,phone_number,registration_date,membership_type)
         VALUES (%s, %s, %s, %s, %s, %s, %s)
-"""
+        """
         values = (first_name, last_name, email, password,phone,registraion_date,membership)
         self.mysql_cursor.execute(query,values)
         self.connection.commit()
@@ -90,15 +104,35 @@ class Widget(QWidget):
     def search_books(self, filter_query):
         book_name = self.ui.books_title_edit.text()
         author_name = self.ui.books_author_edit.text()
-        
+        print(book_name)
+        print(author_name)
         query = """
         SELECT b.title, a.author_name, a.author_last_name, b.year, b.category
         FROM book b
-        JOIN author a ON b.author_ID = a.author_ID;
-"""
-        self.mysql_cursor.execute(query)
+        JOIN author a ON b.author_ID = a.author_ID
+        WHERE 1=1
+        """
+        params = []
+        # Add book name to query
+        if book_name != "":
+            query += " AND b.title LIKE %s"
+            params.append(f"%{book_name}%")
+
+        # Add author name to query
+        if author_name != "":
+            query += " AND a.author_name LIKE %s"
+            params.append(f"%{author_name}%")
+        
+        # Add filters to query
+
+        if filter_query != "" and filter_query != False:
+            query += filter_query
+
+        self.mysql_cursor.execute(query, params)
         books = self.mysql_cursor.fetchall()
         self.populate_table(books)
+        
+
 
     # A function that update the table books
     def populate_table(self, books):
@@ -115,7 +149,6 @@ class Widget(QWidget):
 
         #A dictionary that used for checking the categories.
         category_dict = {
-            "All":False,
             "Romance":False,
             "Horror":False,
             "Fantasy":False,
@@ -126,7 +159,7 @@ class Widget(QWidget):
             "Adventure":False
         }
 
-        category_dict["All"] = self.ui.checkBox_all_books.isChecked()
+        #Each category is checking
         category_dict["Romance"] = self.ui.romance_box_books.isChecked()
         category_dict["Horror"] = self.ui.horror_box_books.isChecked()
         category_dict["Fantasy"] = self.ui.fantasy_box_books.isChecked()
@@ -135,6 +168,31 @@ class Widget(QWidget):
         category_dict["History"] = self.ui.history_box_books.isChecked()
         category_dict["Science Fiction"] = self.ui.science_box_books.isChecked()
         category_dict["Adventure"] = self.ui.adventure_box_books.isChecked()
+
+
+
+        filter_query = ""
+        first_filter = 0
+
+        #Adding selected filters to query
+        for key, value in category_dict.items():
+            if value == True:
+                if first_filter == 0:
+                    filter_query += f" AND (b.category LIKE '{key}'"
+                    first_filter = 1
+                else:
+                    filter_query += f" OR b.category LIKE '{key}'"
+        
+        if first_filter == 1:
+            filter_query += ")"
+
+        #Adding date info to query
+        first_date = self.ui.first_date_year.date().year()
+        second_date = self.ui.second_date_year.date().year()
+        filter_query += f" AND b.year >= {first_date}"
+        filter_query += f" AND b.year <= {second_date}"
+        
+        self.search_books(filter_query)
 
 
     #Function that log in the user of staff to application with checking database

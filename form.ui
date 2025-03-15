@@ -52,6 +52,9 @@
         </item>
         <item>
          <widget class="QPushButton" name="books_menu_button">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="styleSheet">
            <string notr="true">background: white;</string>
           </property>
@@ -87,12 +90,12 @@
       </widget>
      </item>
      <item>
-      <widget class="QStackedWidget" name="stackedWidget">
+      <widget class="QStackedWidget" name="main_widget">
        <property name="styleSheet">
         <string notr="true">background:black;</string>
        </property>
        <property name="currentIndex">
-        <number>1</number>
+        <number>0</number>
        </property>
        <widget class="QWidget" name="loans_widget_users">
         <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -1081,13 +1084,6 @@ padding-bottom:7px;
                    </widget>
                   </item>
                   <item>
-                   <widget class="QCheckBox" name="checkBox_all_books">
-                    <property name="text">
-                     <string>All</string>
-                    </property>
-                   </widget>
-                  </item>
-                  <item>
                    <widget class="QCheckBox" name="romance_box_books">
                     <property name="text">
                      <string>Romance</string>
@@ -1187,10 +1183,32 @@ padding-bottom:7px;
                    </widget>
                   </item>
                   <item>
-                   <widget class="QDateEdit" name="first_date_year"/>
+                   <widget class="QDateEdit" name="first_date_year">
+                    <property name="displayFormat">
+                     <string>yyyy</string>
+                    </property>
+                    <property name="date">
+                     <date>
+                      <year>1755</year>
+                      <month>1</month>
+                      <day>1</day>
+                     </date>
+                    </property>
+                   </widget>
                   </item>
                   <item>
-                   <widget class="QDateEdit" name="second_date_year"/>
+                   <widget class="QDateEdit" name="second_date_year">
+                    <property name="displayFormat">
+                     <string>yyyy</string>
+                    </property>
+                    <property name="date">
+                     <date>
+                      <year>2026</year>
+                      <month>1</month>
+                      <day>1</day>
+                     </date>
+                    </property>
+                   </widget>
                   </item>
                  </layout>
                 </widget>
@@ -1223,6 +1241,9 @@ padding-bottom:7px;
             </item>
             <item>
              <widget class="QTableWidget" name="books_table">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
               <property name="styleSheet">
                <string notr="true">background:#FFEEE4;</string>
               </property>

@@ -396,11 +396,6 @@ class Ui_Widget(object):
 
         self.verticalLayout_4.addWidget(self.category_label_books)
 
-        self.checkBox_all_books = QCheckBox(self.category_filter_books)
-        self.checkBox_all_books.setObjectName(u"checkBox_all_books")
-
-        self.verticalLayout_4.addWidget(self.checkBox_all_books)
-
         self.romance_box_books = QCheckBox(self.category_filter_books)
         self.romance_box_books.setObjectName(u"romance_box_books")
 
@@ -468,11 +463,13 @@ class Ui_Widget(object):
 
         self.first_date_year = QDateEdit(self.year_filter_books)
         self.first_date_year.setObjectName(u"first_date_year")
+        self.first_date_year.setDate(QDate(1755, 1, 1))
 
         self.verticalLayout_5.addWidget(self.first_date_year)
 
         self.second_date_year = QDateEdit(self.year_filter_books)
         self.second_date_year.setObjectName(u"second_date_year")
+        self.second_date_year.setDate(QDate(2026, 1, 1))
 
         self.verticalLayout_5.addWidget(self.second_date_year)
 
@@ -565,7 +562,6 @@ class Ui_Widget(object):
         self.books_author_edit.setText("")
         self.label_author_books.setText(QCoreApplication.translate("Widget", u"Author Name:", None))
         self.category_label_books.setText(QCoreApplication.translate("Widget", u"Category", None))
-        self.checkBox_all_books.setText(QCoreApplication.translate("Widget", u"All", None))
         self.romance_box_books.setText(QCoreApplication.translate("Widget", u"Romance", None))
         self.horror_box_books.setText(QCoreApplication.translate("Widget", u"Horror", None))
         self.fantasy_box_books.setText(QCoreApplication.translate("Widget", u"Fantasy", None))
@@ -576,6 +572,8 @@ class Ui_Widget(object):
         self.adventure_box_books.setText(QCoreApplication.translate("Widget", u"Adventure", None))
         self.label_4.setText(QCoreApplication.translate("Widget", u"Year", None))
         self.label.setText(QCoreApplication.translate("Widget", u"Between", None))
+        self.first_date_year.setDisplayFormat(QCoreApplication.translate("Widget", u"yyyy", None))
+        self.second_date_year.setDisplayFormat(QCoreApplication.translate("Widget", u"yyyy", None))
         self.filter_button_books.setText(QCoreApplication.translate("Widget", u"Filter", None))
     # retranslateUi
 
