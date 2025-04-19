@@ -49,3 +49,6 @@ CREATE TABLE loan (
     FOREIGN KEY (book_ID) REFERENCES book(book_ID),
     FOREIGN KEY (user_ID) REFERENCES user(user_ID)
 );
+
+ALTER TABLE loan
+ADD COLUMN status VARCHAR(20);

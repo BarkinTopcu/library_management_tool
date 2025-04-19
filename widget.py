@@ -4,7 +4,7 @@ from PySide6.QtWidgets import QApplication, QWidget,QTableWidgetItem
 #     pyside6-uic form.ui -o ui_form.py
 from ui_form import Ui_Widget
 import mysql.connector
-import datetime
+from datetime import datetime
 class Widget(QWidget):
 
     def __init__(self, parent=None):
@@ -32,6 +32,7 @@ class Widget(QWidget):
         #Visible / Unvisible
         self.ui.books_menu_button.hide()
         self.ui.loans_menu_button.hide()
+        self.ui.staff_button.hide()
         self.ui.main_menu_widgets.setCurrentWidget(self.ui.main_menu_log_in)
 
         #Button connections
@@ -42,8 +43,17 @@ class Widget(QWidget):
         self.ui.books_menu_button.clicked.connect(self.go_books_menu)
         self.ui.loans_menu_button.clicked.connect(self.go_loans_menu)
         self.ui.main_menu_button.clicked.connect(self.go_main_menu)
+        self.ui.staff_button.clicked.connect(self.go_staff_menu)
+
         self.ui.search_button_books.clicked.connect(self.search_books)
         self.ui.filter_button_books.clicked.connect(self.filter_books)
+        self.ui.create_loan_button.clicked.connect(self.loan_create)
+        self.ui.remove_loan_button.clicked.connect(self.loan_remove)
+        self.ui.show_all_loans_button.clicked.connect(self.loan_table)
+        self.ui.show_staff_loans.clicked.connect(self.loan_table_staff)
+        self.ui.loan_edit_button.clicked.connect(self.loan_edit)
+        
+
 
     #SQL connect
     def mysql_connect(self):
@@ -71,6 +81,10 @@ class Widget(QWidget):
     def go_loans_menu(self):
         self.ui.main_widget.setCurrentWidget(self.ui.loans_widget_users)
 
+    def go_staff_menu(self):
+        self.ui.main_widget.setCurrentWidget(self.ui.staff_menu_widget)
+
+
     #Button function that goes to signup of mainmenu
     def go_signup_button(self):
         self.ui.main_menu_widgets.setCurrentWidget(self.ui.main_menu_sign_up)
@@ -78,6 +92,7 @@ class Widget(QWidget):
     #Button function that allow users to go to login page from sign up page
     def go_back_login_button(self):
         self.ui.main_menu_widgets.setCurrentWidget(self.ui.main_menu_log_in)
+
     
 
     '''
@@ -107,7 +122,7 @@ class Widget(QWidget):
         print(book_name)
         print(author_name)
         query = """
-        SELECT b.title, a.author_name, a.author_last_name, b.year, b.category
+        SELECT b.title, b.book_ID, a.author_name, a.author_last_name, b.year, b.category
         FROM book b
         JOIN author a ON b.author_ID = a.author_ID
         WHERE 1=1
@@ -138,8 +153,8 @@ class Widget(QWidget):
     def populate_table(self, books):
         table = self.ui.books_table
         table.setRowCount(len(books))
-        table.setColumnCount(5) 
-        table.setHorizontalHeaderLabels(["Title", "Author Name", "Last Name", "Year", "Category"])
+        table.setColumnCount(6) 
+        table.setHorizontalHeaderLabels(["Title", "Book ID", "Author Name", "Last Name", "Year", "Category"])
         for row_idx, row_data in enumerate(books):
             for col_idx, cell_data in enumerate(row_data):
                 table.setItem(row_idx, col_idx, QTableWidgetItem(str(cell_data)))
@@ -194,6 +209,94 @@ class Widget(QWidget):
         
         self.search_books(filter_query)
 
+    def loan_create(self):
+        book_ID = self.ui.loans_book_ID_edit.text()
+        user_ID = self.user_ID
+        loan_date = datetime.now()
+        status = "Waiting"
+        query = """
+        INSERT INTO loan (book_ID, user_ID, loan_date,status_state)
+        VALUES (%s, %s, %s, %s)
+        """
+        values =(book_ID,user_ID,loan_date,status)
+        self.mysql_cursor.execute(query, values)
+        self.connection.commit()
+
+    def loan_remove(self):
+        loan_ID = self.ui.loans_loan_ID_edit.text()
+        query = """
+        SELECT 1 FROM loan
+        WHERE %s = user_ID AND status_state = 'Waiting' AND %s = loan_ID
+        """
+        values =(self.user_ID,loan_ID)
+        self.mysql_cursor.execute(query, values)
+        result = self.mysql_cursor.fetchall()
+
+        if result:
+            query = """
+            DELETE FROM loan WHERE loan_ID = %s
+            """
+            values =(loan_ID,)
+            self.mysql_cursor.execute(query, values)
+            self.connection.commit()
+
+    def loan_table(self):
+        query = """
+        SELECT l.loan_ID, l.book_ID, b.title,loan_date, l.status_state FROM loan l
+        LEFT JOIN book b ON b.book_ID = l.book_ID
+        WHERE %s = l.user_ID 
+        """
+        values =(self.user_ID,)
+        self.mysql_cursor.execute(query, values)
+        result = self.mysql_cursor.fetchall()
+
+        table = self.ui.user_loans_table
+        
+        table.setRowCount(len(result))
+        table.setColumnCount(5) 
+        table.setHorizontalHeaderLabels(["Loan ID", "Book ID", "Title","Loan Date", "Status"])
+
+        column_widths = [100, 100, 220, 120, 100]
+
+        for col_idx, width in enumerate(column_widths):
+            table.setColumnWidth(col_idx, width)
+            
+        for row_idx, row_data in enumerate(result):
+            for col_idx, cell_data in enumerate(row_data):
+                table.setItem(row_idx, col_idx, QTableWidgetItem(str(cell_data)))
+
+    def loan_edit(self):
+        query = """
+                UPDATE loan SET status_state =%s WHERE loan_ID = %s
+"""
+        loan_ID = self.ui.staff_loan_ID.text()
+        status = self.ui.staff_loan_status.text()
+
+        values =(status,loan_ID)
+        self.mysql_cursor.execute(query, values)
+        self.connection.commit()
+
+    def loan_table_staff(self):
+        query = """
+        SELECT l.loan_ID, l.book_ID, b.title,loan_date, l.user_ID,l.status_state,l.staff_ID,l.return_date FROM loan l
+        LEFT JOIN book b ON b.book_ID = l.book_ID
+        """
+        self.mysql_cursor.execute(query)
+        result = self.mysql_cursor.fetchall()
+
+        table = self.ui.staff_loan_table
+        
+        table.setRowCount(len(result))
+        table.setColumnCount(8) 
+        table.setHorizontalHeaderLabels(["Loan ID", "Book ID", "Title","Loan Date", "User ID","Status","Staff ID","Return Date"])
+
+            
+        for row_idx, row_data in enumerate(result):
+            for col_idx, cell_data in enumerate(row_data):
+                table.setItem(row_idx, col_idx, QTableWidgetItem(str(cell_data)))
+        table.resizeColumnsToContents()
+
+
 
     #Function that log in the user of staff to application with checking database
     def on_login_button_click(self):
@@ -213,6 +316,7 @@ class Widget(QWidget):
                 if checker == True:
                     self.user_type ="staff"
                     self.user_ID, self.first_name, self.last_name, self.email, *others = result
+                    self.ui.staff_button.show()
                 else:
                     self.user_type ="user"
                     self.user_ID, self.first_name, self.last_name, self.phone, self.email, self.reg, self.membership, *others = result
